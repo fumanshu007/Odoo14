@@ -7,7 +7,6 @@ from odoo import api, fields, models, _
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    @api.multi
     def _uninvoiced_total_amount_get(self):
         sale_data = self.env['sale.order'].read_group(
             domain=[('partner_id', 'child_of', self.ids),('state','=','sale'),('invoice_status','in',['to invoice', 'no'])],
