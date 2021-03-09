@@ -12,8 +12,7 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     state = fields.Selection(selection_add=[('account_review', 'Account Review')])
-
-    @api.multi
+    
     def action_confirm(self):
         Params = self.env['ir.config_parameter'].sudo()
 
@@ -63,11 +62,9 @@ class SaleOrder(models.Model):
         
         return True
 
-    @api.multi
     def action_account_approve(self):
         return super(SaleOrder, self).action_confirm()
 
-    @api.multi
     def action_account_disapprove(self):
         self.filtered(lambda s: s.state == 'account_review').write({'state': 'draft'})
         return True
